@@ -57,11 +57,48 @@ class Program {
 
                     var rawData = (
                         dataDate: DateTime.Parse(curLine.Split(',')[0]),
-                        dataSleep: curLine.Split(',')[0].Split('|')
+                        dataSleep: curLine.Split(',')[1].Split('|')
                     );
+                    
+                    Console.WriteLine($"Week of {rawData.dataDate:MMM, dd, yyyy}");
+                    Console.WriteLine( " Mo Tu We Th Fr Sa Su Tot Avg");
+                    Console.WriteLine( " -- -- -- -- -- -- -- --- ---");
+
+                    Console.Write(' ');
+                    
+                    foreach(string dataPoint in rawData.dataSleep) {
+                        int numeric = int.Parse(dataPoint);
+                        Console.Write($"{numeric:D} ".PadLeft(3));
+                    }
+                    
+                    Console.Write($"{Total(rawData.dataSleep):D} ".PadLeft(4));
+                    Console.Write($"{Average(rawData.dataSleep):N1} ");
+
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
 
                 break;
         }
+    }
+
+    static int Total(String[] values) {
+        int sum = 0;
+        
+        foreach (var value in values) {
+            sum += int.Parse(value);
+        }
+
+        return sum;
+    }
+    
+    static double Average(String[] values) {
+        double sum = 0;
+        
+        foreach (var value in values) {
+            sum += int.Parse(value);
+        }
+
+        return sum / values.Length;
     }
 }
